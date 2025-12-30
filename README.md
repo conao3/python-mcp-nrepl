@@ -1,47 +1,80 @@
-# python-mcp-nrepl
+# mcp-nrepl
 
-# Usage
+An MCP (Model Context Protocol) server that connects to nREPL servers, enabling AI assistants like Claude to evaluate Clojure code interactively.
 
-## Install
+## Overview
+
+This server provides a bridge between MCP-compatible clients and nREPL, the standard network REPL protocol used in Clojure development. It allows AI assistants to connect to running Clojure processes and evaluate code in real-time.
+
+## Features
+
+- Connect to any nREPL server by host and port
+- Evaluate Clojure code and return results
+- Seamless integration with Claude Desktop and other MCP clients
+
+## Requirements
+
+- Python 3.13 or higher
+- PDM (Python package manager)
+- A running nREPL server to connect to
+
+## Installation
 
 ```bash
 pdm install
 ln -s $(pdm run which mcp-nrepl) ~/.local/bin/
 ```
 
-If you haven't configure `$PATH` to `~/.local/bin/`, you should add your bashrc.
+If `~/.local/bin` is not in your PATH, add the following to your shell configuration:
 
 ```bash
-PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## Configure MCP client
-Add below config for `claude_desktop_config.json`.
+## Configuration
+
+### Claude Desktop
+
+Add the following to your `claude_desktop_config.json`:
 
 ```json
 {
-    "mcpServers": {
-        "nrepl": {
-            "command": "mcp-nrepl"
-        }
+  "mcpServers": {
+    "nrepl": {
+      "command": "mcp-nrepl"
     }
+  }
 }
 ```
 
-# Development
+## Usage
 
-## Run (develop)
+Once configured, the MCP server provides an `action_nrepl` tool that accepts:
+
+- `host`: The nREPL server hostname
+- `port`: The nREPL server port
+- `code`: The Clojure code to evaluate
+
+The tool connects to the specified nREPL server, evaluates the code, and returns the result.
+
+## Development
+
+Run the server in development mode:
+
 ```bash
 pdm run mcp-nrepl
 ```
 
-## NixOS tips
+### NixOS Users
 
-### pdm fails missing virtualenv
-`pdm` uses `virtualenv` to create virtual env but Python which installed by NixOS don't have it, pdm fails.
-
-ref: https://github.com/NixOS/nixpkgs/issues/225730
+If PDM fails with a missing virtualenv error, configure it to use the built-in venv module instead:
 
 ```bash
 pdm config venv.backend venv
 ```
+
+See [NixOS/nixpkgs#225730](https://github.com/NixOS/nixpkgs/issues/225730) for more details.
+
+## License
+
+Apache-2.0

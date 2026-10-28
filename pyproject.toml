@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "conao3", email = "conao3@gmail.com"},
 ]
-dependencies = ["mcp[cli]>=1.6.0", "nrepl-python-client>=0.0.3"]
+dependencies = ["mcp[cli]>=2.3.0", "nrepl-python-client>=0.0.3"]
 requires-python = ">=3.13"
 readme = "README.md"
 license = {text = "Apache-2.0"}

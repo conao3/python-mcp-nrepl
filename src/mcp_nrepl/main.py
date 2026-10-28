@@ -1,7 +1,7 @@
 import nrepl
-import mcp.server.fastmcp
+import mcp.server.mcpserver
 
-app = mcp.server.fastmcp.FastMCP("mcp-nrepl")
+app = mcp.server.mcpserver.MCPServer("mcp-nrepl")
 
 @app.tool()
 def action_nrepl(host: str, port: int, code: str) -> str:
